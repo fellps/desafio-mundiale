@@ -1,0 +1,9 @@
+{
+  "name": "crawler",
+  "version": "1.0.0",
+  "description": "Crawler para busca de produtos no Mercado Livre",
+  "main": "index.js",
+  "repository": "https://github.com/fellps/desafio-mundiale",
+  "author": "Fellipe Vasconcelos",
+  "license": "MIT"
+}
