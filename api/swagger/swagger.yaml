@@ -1,0 +1,70 @@
+swagger: "2.0"
+info:
+  description: Crawler capaz de buscar uma lista de produtos no Mercado Livre
+  title: Crawler Mercado Livre
+  version: "1.0.0"
+host: localhost:3000
+basePath: /v1
+schemes:
+- http
+- https
+consumes:
+- application/json
+- application/x-www-form-urlencoded
+produces:
+- application/json
+paths:
+  "/search":
+    x-swagger-router-controller: mercadoLivreController
+    post:
+      operationId: search
+      description: Busca lista de produtos no Mercado Livre
+      parameters:
+      - name: search
+        in: formData
+        description: Termo usado na busca
+        required: true
+        type: string
+      - name: limit
+        in: formData
+        description: Número de registros retornados
+        required: true
+        type: string
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+          headers:
+            Content-Type:
+              type: string
+              description: Media type of request
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            Content-Type:
+              type: string
+              description: Media type of request
+definitions:
+  DefaultResponse:
+    required:
+    - data
+    - error
+    - message
+    properties:
+      data:
+        type: array
+        items:
+          type: object
+      error:
+        type: boolean
+      message:
+        type: string
+  ErrorResponse:
+    required:
+    - message
+    properties:
+      message:
+        type: string
