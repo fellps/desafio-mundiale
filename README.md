@@ -65,6 +65,12 @@ Termos utilizados nos testes: { seach: "copo", limit: x }
   visto nos testes de performance, o resultado se mostrou satisfatório.
   - Foram realizados testes de performance entre o **Axios**, **Request** e o **Req-Fast**. O Req-Fast demonstrou-se consideravelmente mais rápido que os demais.
   - Foram realizados testes entre o **Puppeteer** e o **Cheerio**. Para o desafio proposto, sem dúvidas o Cheerio foi a melhor escolha.
-  
+
+## Mais informações sobre o código
+- Versão utilizada do Node.js: 12.16.3 LTS
+- Versão utilizada do Redis: 6.0.1
+- A aplicação faz uso do **eslint** para padronização do código.
+- A aplicação utiliza padronização de mensagens de retorno de erro, sucesso etc.
+
 ## Curiosidades
   O Mercado Livre possui um limite de 40 páginas e um total de 2000 produtos para busca. Com isso temos 2000/40 = 50. Número utilizado anteriormente para o calculo de paginação.
