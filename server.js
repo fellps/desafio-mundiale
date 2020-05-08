@@ -29,3 +29,7 @@ swaggerExpress.create(swaggerConfig, (err, middleware) => {
     console.log(`Server is listening on port ${config.apiPort}!`)
   })
 })
+
+if (process.env.TEST_MODE) {
+  module.exports = app // for testing
+}

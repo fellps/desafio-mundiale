@@ -10,7 +10,6 @@ schemes:
 - https
 consumes:
 - application/json
-- application/x-www-form-urlencoded
 produces:
 - application/json
 paths:
@@ -25,11 +24,14 @@ paths:
         description: Termo usado na busca
         required: true
         type: string
+        minLength: 1
       - name: limit
         in: formData
         description: Número de registros retornados
         required: true
-        type: string
+        type: integer
+        format: int64
+        minimum: 1
       responses:
         '200':
           description: Success
@@ -51,8 +53,6 @@ definitions:
   DefaultResponse:
     required:
     - data
-    - error
-    - message
     properties:
       data:
         type: array

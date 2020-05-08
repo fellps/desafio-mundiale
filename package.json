@@ -28,7 +28,7 @@
     "supertest": "^4.0.2"
   },
   "scripts": {
-    "start": "nodemon -e js,yaml server.js",
-    "test": "mocha --timeout 20000 --exit"
+    "dev": "nodemon -e js,yaml server.js",
+    "test": "mocha --require sucrase/register ./test/**/*.js --timeout 20000 --exit"
   }
 }
