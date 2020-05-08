@@ -2,6 +2,7 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import swaggerExpress from 'swagger-express-mw'
 
+import { logger } from './config/logger'
 import config from './config'
 
 const swaggerConfig = {
@@ -13,11 +14,6 @@ const app = express()
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
-app.use((req, res, next) => {
-  console.log(`Request coming => ${req.originalUrl}`)
-  next()
-})
-
 swaggerExpress.create(swaggerConfig, (err, middleware) => {
   if (err) throw err
 
@@ -26,7 +22,7 @@ swaggerExpress.create(swaggerConfig, (err, middleware) => {
 
   // listen on port 300
   app.listen(config.apiPort, () => {
-    console.log(`Server is listening on port ${config.apiPort}!`)
+    logger.log('info', `Server is listening on port ${config.apiPort}!`)
   })
 })
 

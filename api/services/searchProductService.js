@@ -1,8 +1,17 @@
-import axios from 'axios'
 import cheerio from 'cheerio'
 import config from '../../config'
 import selector from '../helpers/mercadoLivreSelector'
-import { find, findLink } from '../helpers/finder'
+import { find, findLink } from '../modules/finder'
+import req from 'req-fast'
+
+const fetchProducts = (url) => {
+  return new Promise((resolve, reject) => {
+    req(url, (err, resp) => {
+      if (err) reject(err)
+      resolve(resp)
+    })
+  })
+}
 
 export const searchProduct = async (search, limit, total) => {
   if(total > 0) 
@@ -10,7 +19,7 @@ export const searchProduct = async (search, limit, total) => {
 
   const url = `${config.mercadoLivreUrl}${search}`
 
-  const { data: body } = await axios(url)
+  const { body } = await fetchProducts(url)
   const $ = cheerio.load(body)
 
   return $(selector.PRODUCTS).map((i, element) => {

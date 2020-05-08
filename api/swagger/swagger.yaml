@@ -53,6 +53,7 @@ definitions:
   DefaultResponse:
     required:
     - data
+    - message
     properties:
       data:
         type: array
