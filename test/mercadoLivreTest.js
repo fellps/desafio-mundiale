@@ -28,7 +28,7 @@ describe('Mercado Livre', () => {
     it('Should return product not found message', done => {
       request(server)
         .post('/v1/search')
-        .send({ search: '123adalovelace123', limit: 1 })
+        .send({ search: '123adalovelace123', limit: 150 })
         .set('Content-Type', 'application/json')
         .end((err, res) => {
           should.not.exist(err)
@@ -91,6 +91,23 @@ describe('Mercado Livre', () => {
           res.body.message.should.equal('Validation errors')
           res.body.errors[0].should.have.value('code', 'INVALID_REQUEST_PARAMETER')
           res.body.errors[0].errors[0].should.have.value('code', 'MINIMUM')
+  
+          done()
+        })
+    })
+    it('Should return 400 Bad Request when the maximum limit is greater than 2001', done => {
+      request(server)
+        .post('/v1/search')
+        .send({ search: 'cadeado', limit: 9999 })
+        .set('Content-Type', 'application/json')
+        .end((err, res) => {
+          should.not.exist(err)
+          res.status.should.be.eql(400)
+          res.body.should.be.instanceOf(Object)
+          res.body.should.have.properties('message', 'errors')
+          res.body.message.should.equal('Validation errors')
+          res.body.errors[0].should.have.value('code', 'INVALID_REQUEST_PARAMETER')
+          res.body.errors[0].errors[0].should.have.value('code', 'MAXIMUM')
   
           done()
         })

@@ -9,7 +9,7 @@ export const logger = createLogger({
   transports: [
     new transports.File({
       level: 'info',
-      maxsize: 1024 * 1024 * 20, // 10MB
+      maxsize: 1024 * 1024 * 10, // 10MB por arquivo
       maxFiles: 5,
       filename: 'logs/api.log',
       format: format.combine(format.timestamp(), format.json())

@@ -1,11 +1,13 @@
 import config from '../../config'
+import keyv from 'keyv'
+import redis from 'redis'
 
-const Keyv = require('keyv')
-const redis = require('redis')
-
+// Caso a conexão com o Redis esteja ativada, cria uma instância de conexão
 const redisConn = (config.redis.enabled) ? redis.createClient({ url: config.redis.uri }) : void (0)
 
-const memoiseDisabled = function () {
+// Caso a conexão com o Redis esteja desativada, 
+// retorna o método com funções vazias
+const memoiseDisabled = () => {
   return {
     clear: async () => {},
     flush: async () => {},
@@ -14,18 +16,18 @@ const memoiseDisabled = function () {
   }
 }
 
-const memoise = function (namespace) {
-  const _uuid = 'MercadoLivre' + namespace
-  const map = new Keyv(
+// É possível criar várias instâncias memoise com base no namespace
+const memoise = (namespace) => {
+  const map = new keyv(
     (config.redis.enabled ? config.redis.uri : void (0)),
-    { namespace: _uuid }
+    { namespace }
   )
   return {
     clear: async () => map.clear(),
     flush: async () => {
       if (redisConn) {
-        return new Promise(function (resolve, reject) {
-          redisConn.FLUSHALL(function (err, res) {
+        return new Promise((resolve, reject) => {
+          redisConn.FLUSHALL((err, res) => {
             if (err) return reject(err)
             resolve(res)
           })

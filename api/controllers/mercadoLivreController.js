@@ -1,23 +1,43 @@
-import { searchProduct } from '../services/searchProductService'
+import md5 from 'md5'
 import result from '../modules/result'
 import memoise from '../modules/memoise'
+import { searchProduct } from '../services/searchProductService'
+
+const memoiseData = memoise('MERCADO_LIVRE_SEARCH')
 
 export const search = async (req, res) => {
   try {
-    const memoiseData = memoise('MERCADO_LIVRE_SEARCH')
-    const resultMemoise = await memoiseData.get('sha1')
-    if (resultMemoise) console.log(resultMemoise)
-    memoiseData.set('sha1', {teste: '1234'}, 10000)
-
     const { search, limit } = req.body
 
-    let products = []
-    let data = null
+    // Verifica se existe um cache em memória para a busca atual
+    const searchKey = md5(JSON.stringify(req.body))
+    const resultMemoise = await memoiseData.get(searchKey)
 
-    while (limit > products.length) {
-      data = await searchProduct(search, limit, products.length)
-      products = products.concat(data)
+    // Caso exista um cache da requisição em memória, retorna imediatamente
+    if (resultMemoise) return result.success.successOnSearch(res, resultMemoise)
+
+    let products = []
+    const searches = []
+    const pagination = Math.ceil(limit / 51)
+
+    // Armazena as promises das buscas em um array
+    for (let i = 1; i <= pagination; i++) {
+      searches[i] = searchProduct(search, i * 50)
     }
+
+    // Resolve todas as promises
+    let results = await Promise.all(searches)
+
+    // Preenche o array de produtos
+    results.forEach(result => {
+      result && result.forEach(product => products.push(product))
+    })
+
+    // Filtra a quantidade de produtos necessários
+    products = products.slice(0, limit)
+    
+    // Armazena o resultado da busca em cache
+    memoiseData.set(searchKey, products, 60 * 60 * 100)
 
     return result.success.successOnSearch(res, products)
   } catch (err) {

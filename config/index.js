@@ -5,10 +5,7 @@ export default {
   apiPort: process.env.API_PORT || 3000,
   mercadoLivreUrl: process.env.MERCADO_LIVRE_URL,
   redis: {
-    enabled: Boolean(Number(process.env.REDIS_ENABLED || 0)),
+    enabled: !process.env.TEST_MODE && Boolean(Number(process.env.REDIS_ENABLED || 0)),
     uri: process.env.REDIS_URI
-  },
-  memoise: {
-    enabled: Boolean(Number(process.env.MEMOISE_ENABLED || 0)),
   }
 }
