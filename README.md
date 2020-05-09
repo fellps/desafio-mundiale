@@ -1,6 +1,10 @@
 # Desafio Mundiale
 Desafio proposto pela Mundiale. Trata-se de um Crawler capaz de buscar uma lista de produtos no Mercado Livre.
 
+## Endereço para testes
+  - https://cryptic-tundra-10398.herokuapp.com/v1/search
+  - Documentação: https://cryptic-tundra-10398.herokuapp.com/docs
+
 ## Instalação e configuração
   1. O projeto utiliza variáveis de ambiente, renomeie o arquivo **.env.example** para **.env**
   2. Rode o comando: **docker-compose up**
