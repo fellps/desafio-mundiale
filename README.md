@@ -1,13 +1,22 @@
 # Desafio Mundiale
 Desafio proposto pela Mundiale. Trata-se de um Crawler capaz de buscar uma lista de produtos no Mercado Livre.
 
+## Endereço para testes
+  - https://cryptic-tundra-10398.herokuapp.com/v1/search
+  - Documentação: https://cryptic-tundra-10398.herokuapp.com/docs
+
 ## Instalação e configuração
   1. O projeto utiliza variáveis de ambiente, renomeie o arquivo **.env.example** para **.env**
   2. Rode o comando: **docker-compose up**
   3. [**OPCIONAL**] O projeto utiliza a técnica de **Memoization** juntamente com o **Redis** para criar caches de consultas. Caso queira ativar essa função, siga os seguintes passos:
   - No arquivo **.env** habilite a variável **REDIS_ENABLED=1**
   - Será necessário configurar a URL de conexão com o Redis. Para isso, rode o comando **docker network inspect crawler_backend**
-      e verifique o IP em que o Redis está executando. No arquivo **.env** altere a variável **REDIS_URI** para o seu endereço de IP. Se necessário, rode novamente o comando **docker-compose up**
+      e verifique o IP em que o Redis está executando. No arquivo **.env** altere a variável **REDIS_URI** para o seu endereço de IP. Se necessário, rode novamente o comando **docker-compose up**.
+
+    Como alternativa, pode ser utilizado o seguinte endereço para testes
+    ```
+    redis://redistogo:bf4366865b28aedc876026b68272b153@pearlfish.redistogo.com:10337/
+    ```
 
   Para realizar testes, envie requisições ao endpoint:
   ```
