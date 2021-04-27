@@ -15,7 +15,7 @@
     "keyv": "^4.0.1",
     "lodash": "^4.17.15",
     "md5": "^2.2.1",
-    "redis": "^3.0.2",
+    "redis": "^3.1.1",
     "req-fast": "^0.2.19",
     "swagger-express-mw": "^0.7.0",
     "swagger-ui-express": "^4.1.4",
